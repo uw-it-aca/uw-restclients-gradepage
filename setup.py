@@ -23,7 +23,7 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=['simplejson',
-                      'UW-RestClients-Core<1.0'],
+                      'UW-RestClients-Core>0.8,<1.0'],
     license='Apache License, Version 2.0',
     description=('A library for connecting to GradePage services at the '
                  'University of Washington'),
