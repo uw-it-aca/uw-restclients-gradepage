@@ -12,6 +12,7 @@ before_script:
 - pip install coverage
 - pip install commonconf
 - pip install python-coveralls
+- pip install python-datetutil
 script:
 - pep8 uw_gradepage
 - coverage run uw_gradepage/test.py -v
