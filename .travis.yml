@@ -23,7 +23,7 @@ before_deploy:
 - echo $TRAVIS_TAG > uw_gradepage/VERSION
 deploy:
   provider: pypi
-  server: https://pypi.python.org/pypi
+  server: https://testpypi.python.org/pypi
   user: uw-it-aca
   skip_cleanup: true
   password:
