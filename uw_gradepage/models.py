@@ -27,6 +27,8 @@ class GradingStatus(models.Model):
             'submitted_count': self.submitted_count,
             'unsubmitted_count': self.unsubmitted_count,
             'submitted_by': self.submitted_by,
-            'submitted_date': str(self.submitted_date),
-            'accepted_date': str(self.accepted_date),
+            'submitted_date': (str(self.submitted_date)
+                               if self.submitted_date else None),
+            'accepted_date': (str(self.accepted_date)
+                              if self.accepted_date else None),
         }
