@@ -7,13 +7,13 @@ from uw_gradepage.grading_status import get_grading_status
 class TestGradingStatus(TestCase):
     def test_get_grading_status_submitted(self):
         gs = get_grading_status(
-            '2013-spring-PHYS-123-AA-FBB38FE46A7C11D5A4AE0004AC494FFE',
+            '2013-spring-A A-123-AA-FBB38FE46A7C11D5A4AE0004AC494FFE',
             act_as="bill")
         self.assertEquals(gs.no_grades_submitted, False)
         self.assertEquals(
             gs.section_id,
-            '2013-spring-PHYS-123-AA-FBB38FE46A7C11D5A4AE0004AC494FFE')
-        self.assertEquals(gs.display_name, 'PHYS 123 AA')
+            '2013-spring-A A-123-AA-FBB38FE46A7C11D5A4AE0004AC494FFE')
+        self.assertEquals(gs.display_name, 'A A 123 AA')
         self.assertEquals(gs.grading_status, None)
         self.assertEquals(gs.submitted_date,
                           datetime(2013, 6, 6, 21, 42, 19, tzinfo=tzutc()))

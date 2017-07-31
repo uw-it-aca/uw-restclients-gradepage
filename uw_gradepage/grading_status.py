@@ -9,6 +9,11 @@ import simplejson as json
 from uw_gradepage.models import GradingStatus
 from uw_gradepage import get_resource
 from restclients_core.exceptions import DataFailureException
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
+
 
 url_prefix = "/api/v1/grading_status/"
 logger = logging.getLogger(__name__)
@@ -19,7 +24,7 @@ def get_grading_status(section_id, act_as=None):
     Return a restclients.models.gradepage.GradePageStatus object
     on the given course
     """
-    url = "%s%s" % (url_prefix, section_id)
+    url = "%s%s" % (url_prefix, quote(section_id))
     headers = {}
 
     if act_as is not None:
