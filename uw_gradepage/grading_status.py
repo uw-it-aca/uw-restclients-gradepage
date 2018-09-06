@@ -5,14 +5,11 @@ This is the interface for interacting with the GradePage Web Service.
 
 from dateutil.parser import parse
 import logging
-import simplejson as json
+import json
 from uw_gradepage.models import GradingStatus
 from uw_gradepage import get_resource
 from restclients_core.exceptions import DataFailureException
-try:
-    from urllib.parse import quote
-except ImportError:
-    from urllib import quote
+from urllib.parse import quote
 
 
 url_prefix = "/api/v1/grading_status/"
