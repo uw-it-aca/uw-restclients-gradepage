@@ -32,7 +32,7 @@ def get_grading_status(section_id, act_as=None):
 
 
 def _object_from_json(url, response_body):
-    json_data = json.loads(response_body, use_decimal=True)
+    json_data = json.loads(response_body)
     return_obj = GradingStatus()
 
     gs_data = json_data.get('grading_status')
