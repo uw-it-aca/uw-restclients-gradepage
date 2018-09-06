@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def get_resource(url, headers={}):
     response = GradePage_DAO().getURL(url, headers)
-    logger.info("%s ==status==> %s" % (url, response.status))
+    logger.debug("%s ==status==> %s" % (url, response.status))
 
     if response.status != 200:
         raise DataFailureException(url, response.status, response.data)
@@ -24,21 +24,21 @@ def get_resource(url, headers={}):
     # 'Bug' with lib API causing requests with no/invalid user to return a 200
     if INVALID_PARAM_MSG in response.data:
         json_data = json.loads(response.data)
-        raise DataFailureException(url, 400, json_data["Message"])
+        raise DataFailureException(url, 400, str(json_data["Message"]))
 
     if INVALID_ID_MSG in response.data:
         json_data = json.loads(response.data)
-        raise DataFailureException(url, 404, json_data["Message"])
+        raise DataFailureException(url, 404, str(json_data["Message"]))
 
     if ERROR_MSG in response.data:
         json_data = json.loads(response.data)
-        raise DataFailureException(url, 500, json_data["Message"])
+        raise DataFailureException(url, 500, str(json_data["Message"]))
 
     try:
         logger.debug("%s ==data==> %s" % (url, response.data.decode('utf-8')))
     except Exception as ex:
         # MUWM-2414
-        logger.debug("%s ==data==> Data not decodable to log file: %s" % (url,
-                                                                          ex))
+        logger.debug(
+            "%s ==data==> Data not decodable to log file: %s" % (url, str(ex)))
 
     return response.data
