@@ -12,7 +12,7 @@ from restclients_core.exceptions import DataFailureException
 from urllib.parse import quote
 
 
-url_prefix = "/api/v1/grading_status/"
+url_prefix = "/api/v1/grading_status"
 logger = logging.getLogger(__name__)
 
 
@@ -21,7 +21,7 @@ def get_grading_status(section_id, act_as=None):
     Return a restclients.models.gradepage.GradePageStatus object
     on the given course
     """
-    url = "%s%s" % (url_prefix, quote(section_id))
+    url = "{}/{}".format(url_prefix, quote(section_id))
     headers = {}
 
     if act_as is not None:
