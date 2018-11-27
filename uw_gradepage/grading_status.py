@@ -4,16 +4,13 @@ This is the interface for interacting with the GradePage Web Service.
 """
 
 from dateutil.parser import parse
-import logging
-import json
+from logging import getLogger
 from uw_gradepage.models import GradingStatus
 from uw_gradepage import get_resource
-from restclients_core.exceptions import DataFailureException
 from urllib.parse import quote
 
-
-url_prefix = "/api/v1/grading_status"
-logger = logging.getLogger(__name__)
+GRADING_STATUS_URL = "/api/v1/grading_status/{section_id}"
+logger = getLogger(__name__)
 
 
 def get_grading_status(section_id, act_as=None):
@@ -21,25 +18,19 @@ def get_grading_status(section_id, act_as=None):
     Return a restclients.models.gradepage.GradePageStatus object
     on the given course
     """
-    url = "{}/{}".format(url_prefix, quote(section_id))
+    url = GRADING_STATUS_URL.format(section_id=quote(section_id))
     headers = {}
 
     if act_as is not None:
         headers["X-UW-Act-as"] = act_as
 
-    response = get_resource(url, headers)
-    return _object_from_json(url, response)
+    return _object_from_json(url, get_resource(url, headers))
 
 
-def _object_from_json(url, response_body):
-    json_data = json.loads(response_body)
+def _object_from_json(url, json_data):
     return_obj = GradingStatus()
 
     gs_data = json_data.get('grading_status')
-    if gs_data is None:
-        raise DataFailureException(
-            url, 500, "error: bogus resopnse data")
-
     return_obj.section_id = gs_data['section_id']
     return_obj.grading_period_open = gs_data['grading_period_open']
     return_obj.display_name = gs_data['display_name']
