@@ -26,7 +26,6 @@ def get_grading_status(section_id, act_as=None):
 
     return _object_from_json(url, get_resource(url, headers))
 
-
 def _object_from_json(url, json_data):
     return_obj = GradingStatus()
 
