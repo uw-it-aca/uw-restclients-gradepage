@@ -1,4 +1,6 @@
 from restclients_core import models
+from dateutil.parser import parse
+from commonconf import settings
 
 
 class GradingStatus(models.Model):
@@ -14,6 +16,34 @@ class GradingStatus(models.Model):
     submitted_by = models.CharField(max_length=128, null=True)
     submitted_date = models.DateTimeField(blank=True, null=True)
     accepted_date = models.DateTimeField(blank=True, null=True)
+
+    @staticmethod
+    def from_json(data):
+        status = GradingStatus()
+        gs_data = data.get('grading_status')
+        status.section_id = gs_data['section_id']
+        status.grading_period_open = gs_data['grading_period_open']
+        status.display_name = gs_data['display_name']
+        status.status_url = gs_data['status_url']
+        status.grading_status = gs_data['grading_status']
+
+        status.section_url = gs_data['section_url']
+        if status.section_url:
+            # Add the host to this URL for displayed links
+            status.section_url = (
+                getattr(settings, 'RESTCLIENTS_GRADEPAGE_HOST', '') +
+                status.section_url)
+
+        try:
+            status.submitted_count = gs_data['submitted_count']
+            status.unsubmitted_count = gs_data['unsubmitted_count']
+            status.submitted_by = gs_data['submitted_by']
+            status.submitted_date = parse(gs_data["submitted_date"])
+            status.accepted_date = parse(gs_data["accepted_date"])
+            status.no_grades_submitted = False
+        except KeyError:
+            status.no_grades_submitted = True
+        return status
 
     def json_data(self):
         return {
