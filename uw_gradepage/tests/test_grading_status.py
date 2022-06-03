@@ -42,3 +42,10 @@ class TestGradingStatus(TestCase):
         self.assertEqual(gs.section_url, (
             'https://gradepage.test.edu/section/2013-spring-TRAIN-100-A-'
             'FBB38FE46A7C11D5A4AE0004AC494FFE'))
+
+    def test_get_grading_status_not_accepted(self):
+        # Case where grades were submitted, but accepted date is null
+        gs = get_grading_status(
+            '2013-spring-TRAIN-200-A-FBB38FE46A7C11D5A4AE0004AC494FFE',
+            act_as="bill")
+        self.assertEqual(gs.no_grades_submitted, True)
