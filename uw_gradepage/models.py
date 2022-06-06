@@ -1,4 +1,4 @@
-# Copyright 2021 UW-IT, University of Washington
+# Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 from restclients_core import models
@@ -44,7 +44,7 @@ class GradingStatus(models.Model):
             status.submitted_date = parse(gs_data["submitted_date"])
             status.accepted_date = parse(gs_data["accepted_date"])
             status.no_grades_submitted = False
-        except KeyError:
+        except (TypeError, KeyError):
             status.no_grades_submitted = True
         return status
 
