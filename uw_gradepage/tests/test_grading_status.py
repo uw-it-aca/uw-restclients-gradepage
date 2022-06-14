@@ -27,6 +27,25 @@ class TestGradingStatus(TestCase):
         self.assertEqual(gs.section_url, (
             'https://gradepage.test.edu/section/2013-spring-A%20A-123-AA-'
             'FBB38FE46A7C11D5A4AE0004AC494FFE'))
+        self.assertEqual(
+            gs.json_data(),
+            {'accepted_date': '2013-06-06T21:42:20+00:00',
+             'display_name': 'A A 123 AA',
+             'grading_period_open': True,
+             'grading_status': None,
+             'no_grades_submitted': False,
+             'section_id':
+                '2013-spring-A A-123-AA-FBB38FE46A7C11D5A4AE0004AC494FFE',
+             'section_url': (
+                'https://gradepage.test.edu/section/2013-spring'
+                '-A%20A-123-AA-FBB38FE46A7C11D5A4AE0004AC494FFE'),
+             'status_url': ('/api/v1/grading_status/2013-spring-PHYS-123-'
+                            'AA-FBB38FE46A7C11D5A4AE0004AC494FFE'),
+             'submitted_by': 'BILL AVERAGE',
+             'submitted_count': 1,
+             'submitted_date': '2013-06-06T21:42:19+00:00',
+             'unsubmitted_count': 0}
+        )
 
     def test_get_grading_status_not_submitted(self):
         gs = get_grading_status(
